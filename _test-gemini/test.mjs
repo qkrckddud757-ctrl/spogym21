@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { VertexAI } from '@google-cloud/vertexai';
 
-// .env.local 은 Next.js 앱 루트(fitconsult/)에 있음
-const envPath = new URL('../fitconsult/.env.local', import.meta.url);
+// .env.local 은 레포 루트에 있음 (부모 폴더)
+const envPath = new URL('../.env.local', import.meta.url);
 for (const line of readFileSync(envPath, 'utf8').split(/\r?\n/)) {
   const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)\s*$/);
   if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
