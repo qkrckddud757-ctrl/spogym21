@@ -1,0 +1,56 @@
+# ============================================================
+# FitConsult — Git 제외 목록
+# create-next-app이 덮어쓸 수 있으니, 그 후에도 이 내용 유지되는지 확인.
+# ============================================================
+
+# --- 환경변수 (가장 중요) -----------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# .env.example 은 커밋 OK (예시 템플릿)
+!.env.example
+
+# --- 구글 서비스 계정 JSON 키 -------------------------------
+# 혹시라도 폴더에 JSON 키 파일을 떨어뜨렸을 때 실수로 올리는 걸 방지
+proud-limiter-*.json
+*-service-account*.json
+*-credentials*.json
+gcp-key*.json
+
+# --- 의존성 -------------------------------------------------
+node_modules/
+.pnp
+.pnp.*
+.yarn/install-state.gz
+
+# --- Next.js 빌드 산출물 ------------------------------------
+.next/
+out/
+build/
+dist/
+
+# --- 테스트·로그 --------------------------------------------
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Vercel --------------------------------------------------
+.vercel
+
+# --- 편집기·OS -----------------------------------------------
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Claude Code 로컬 설정 (팀 공유 X) -----------------------
+.claude/settings.local.json
+
+# --- 타입·캐시 -----------------------------------------------
+*.tsbuildinfo
+next-env.d.ts
