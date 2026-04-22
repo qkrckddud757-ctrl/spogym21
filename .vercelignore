@@ -1,0 +1,13 @@
+# Vercel 배포에 포함시키지 않을 파일·폴더
+# (로컬 테스트·기획 문서는 GitHub에는 있되 Vercel 빌드에선 제외)
+
+# Gemini 연결 테스트용 — 자체 package.json 가지고 로컬에서만 실행
+_test-gemini/
+
+# 기획 문서 (배포 산출물과 무관)
+CLAUDE.md
+SPEC.md
+AGENTS.md
+
+# Claude Code 설정
+.claude/
