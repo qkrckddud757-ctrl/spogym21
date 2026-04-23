@@ -7,6 +7,8 @@ const PROTECTED_PREFIXES = [
   "/manager",
   "/team",
   "/members",
+  "/trials",
+  "/miss",
   "/admin",
 ];
 

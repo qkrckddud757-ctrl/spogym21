@@ -65,6 +65,12 @@ export default async function DashboardPage() {
             >
               내 회원
             </Link>
+            <Link
+              href="/trials"
+              className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              OT·체험
+            </Link>
             {rankKey === "manager" && (
               <Link
                 href="/admin/users"
