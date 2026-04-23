@@ -2,6 +2,7 @@
 // 헤더(이름·직급·팀)는 Supabase profiles 테이블의 실데이터,
 // 오늘 할 일 / PT 회원 / 주간 지표는 아직 목업. 5~6단계에서 실데이터로 교체.
 
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -58,6 +59,14 @@ export default async function DashboardPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <h1 className="text-xl font-semibold tracking-tight">FitConsult</h1>
           <div className="flex items-center gap-3 text-sm">
+            {rankKey === "manager" && (
+              <Link
+                href="/admin/users"
+                className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                유저 관리
+              </Link>
+            )}
             <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
               {teamLabel === "미배정" ? "팀 미배정" : `${teamLabel}팀`} · {rankLabel}
             </span>
@@ -76,7 +85,14 @@ export default async function DashboardPage() {
 
       <main className="mx-auto max-w-6xl px-6 py-8">
         <div className="mb-6">
-          <p className="text-sm text-slate-500">2026년 4월 22일 수요일</p>
+          <p className="text-sm text-slate-500">
+            {new Intl.DateTimeFormat("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              weekday: "long",
+            }).format(new Date())}
+          </p>
           <h2 className="mt-1 text-2xl font-semibold">
             안녕하세요, {displayName}님
           </h2>

@@ -2,7 +2,13 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // 보호된 경로 접두사 — 여기 매칭되면 로그인 필요
-const PROTECTED_PREFIXES = ["/dashboard", "/manager", "/team", "/members"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/manager",
+  "/team",
+  "/members",
+  "/admin",
+];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
