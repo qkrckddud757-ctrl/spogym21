@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { MemberForm } from "../MemberForm";
 import { updateMember, deleteMember } from "../actions";
 import { AIStrategyPanel } from "./AIStrategyPanel";
+import { UpdateMemberForm } from "./UpdateMemberForm";
 
 export default async function MemberDetailPage({
   params,
@@ -61,31 +61,22 @@ export default async function MemberDetailPage({
           initialAt={member.ai_strategy_at}
         />
 
-        <form action={updateAction} className="space-y-6">
-          <MemberForm
-            initial={{
-              name: member.name,
-              gender: member.gender ?? "",
-              age: member.age ?? undefined,
-              phone: member.phone ?? "",
-              goal: member.goal ?? "",
-              health_notes: member.health_notes ?? "",
-              motivation: member.motivation ?? "",
-              sessions_total: member.sessions_total ?? 0,
-              sessions_used: member.sessions_used ?? 0,
-              status: member.status ?? "활발",
-              notes: member.notes ?? "",
-            }}
-          />
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
-            >
-              정보 저장
-            </button>
-          </div>
-        </form>
+        <UpdateMemberForm
+          action={updateAction}
+          initial={{
+            name: member.name,
+            gender: member.gender ?? "",
+            age: member.age ?? undefined,
+            phone: member.phone ?? "",
+            goal: member.goal ?? "",
+            health_notes: member.health_notes ?? "",
+            motivation: member.motivation ?? "",
+            sessions_total: member.sessions_total ?? 0,
+            sessions_used: member.sessions_used ?? 0,
+            status: member.status ?? "활발",
+            notes: member.notes ?? "",
+          }}
+        />
       </main>
     </div>
   );
