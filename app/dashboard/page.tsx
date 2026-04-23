@@ -59,6 +59,12 @@ export default async function DashboardPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <h1 className="text-xl font-semibold tracking-tight">FitConsult</h1>
           <div className="flex items-center gap-3 text-sm">
+            <Link
+              href="/members"
+              className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              내 회원
+            </Link>
             {rankKey === "manager" && (
               <Link
                 href="/admin/users"
