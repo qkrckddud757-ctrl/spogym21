@@ -3,10 +3,12 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 const STATUS_STYLE: Record<string, string> = {
-  예정: "bg-sky-100 text-sky-700",
-  완료: "bg-slate-100 text-slate-700",
+  계획: "bg-slate-100 text-slate-700",
+  예상: "bg-sky-100 text-sky-700",
+  확정: "bg-indigo-100 text-indigo-700",
   등록: "bg-emerald-100 text-emerald-700",
-  놓침: "bg-rose-100 text-rose-700",
+  미등록: "bg-rose-100 text-rose-700",
+  보류: "bg-amber-100 text-amber-700",
 };
 
 export default async function TrialsPage() {

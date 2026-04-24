@@ -77,7 +77,7 @@ export default async function TrialDetailPage({
             phone: trial.phone ?? "",
             scheduled_at: toLocalInput(trial.scheduled_at),
             attended_at: toLocalInput(trial.attended_at),
-            status: trial.status ?? "예정",
+            status: trial.status ?? "계획",
             goal: trial.goal ?? "",
             concerns: trial.concerns ?? "",
             discussed: trial.discussed ?? "",

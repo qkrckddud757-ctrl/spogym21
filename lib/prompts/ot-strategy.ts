@@ -27,7 +27,7 @@ export function buildOtStrategyPrompt(t: TrialForPrompt): string {
 - 성별 / 나이: ${t.gender ?? "-"} / ${t.age ?? "-"}
 - 체험 예정일: ${formatDate(t.scheduled_at)}
 - 실제 참석일: ${formatDate(t.attended_at)}
-- 현재 상태: ${t.status ?? "-"} (예정 / 완료 / 등록 / 놓침)
+- 현재 상태: ${t.status ?? "-"} (계획 / 예상 / 확정 / 등록 / 미등록 / 보류)
 - 목표: ${t.goal ?? "-"}
 - 고민·걱정: ${t.concerns ?? "-"}
 - 상담 중 나눈 이야기: ${t.discussed ?? "-"}

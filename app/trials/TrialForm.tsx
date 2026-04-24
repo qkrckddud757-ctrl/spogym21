@@ -12,7 +12,7 @@ type InitialValues = Partial<{
   followup_notes: string;
 }>;
 
-const STATUS_LIST = ["예정", "완료", "등록", "놓침"];
+const STATUS_LIST = ["계획", "예상", "확정", "등록", "미등록", "보류"];
 
 export function TrialForm({ initial = {} }: { initial?: InitialValues }) {
   return (
@@ -78,7 +78,7 @@ export function TrialForm({ initial = {} }: { initial?: InitialValues }) {
         <Field label="상태">
           <select
             name="status"
-            defaultValue={initial.status ?? "예정"}
+            defaultValue={initial.status ?? "계획"}
             className={inputCls}
           >
             {STATUS_LIST.map((s) => (

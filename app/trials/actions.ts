@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
-const VALID_STATUS = ["예정", "완료", "등록", "놓침"] as const;
+const VALID_STATUS = ["계획", "예상", "확정", "등록", "미등록", "보류"] as const;
 
 export type TrialUpdateState = {
   ok: boolean;
@@ -118,7 +118,7 @@ function nullable(v: FormDataEntryValue | null): string | null {
 
 function pickStatus(s: string) {
   const v = s.trim();
-  return (VALID_STATUS as readonly string[]).includes(v) ? v : "예정";
+  return (VALID_STATUS as readonly string[]).includes(v) ? v : "계획";
 }
 
 function parseDatetime(v: FormDataEntryValue | null): string | null {
