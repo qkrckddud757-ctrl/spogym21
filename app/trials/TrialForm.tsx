@@ -1,5 +1,6 @@
 type InitialValues = Partial<{
   name: string;
+  kind: string; // 'ot' | 'trial'
   gender: string;
   age: number;
   phone: string;
@@ -13,10 +14,29 @@ type InitialValues = Partial<{
 }>;
 
 const STATUS_LIST = ["계획", "예상", "확정", "등록", "미등록", "보류"];
+const KIND_OPTIONS = [
+  { value: "trial", label: "체험 수업 (등록 전)" },
+  { value: "ot", label: "OT (등록 후 첫 수업)" },
+];
 
 export function TrialForm({ initial = {} }: { initial?: InitialValues }) {
   return (
     <div className="space-y-5 rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+      <Field label="종류" required>
+        <select
+          name="kind"
+          defaultValue={initial.kind ?? "trial"}
+          required
+          className={inputCls}
+        >
+          {KIND_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </Field>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Field label="이름" required>
           <input

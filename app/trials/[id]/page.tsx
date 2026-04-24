@@ -72,6 +72,7 @@ export default async function TrialDetailPage({
           action={updateAction}
           initial={{
             name: trial.name,
+            kind: trial.kind ?? "trial",
             gender: trial.gender ?? "",
             age: trial.age ?? undefined,
             phone: trial.phone ?? "",

@@ -11,7 +11,26 @@ const STATUS_STYLE: Record<string, string> = {
   보류: "bg-amber-100 text-amber-700",
 };
 
-export default async function TrialsPage() {
+const KIND_META: Record<"ot" | "trial", { title: string; subtitle: string }> = {
+  ot: {
+    title: "OT 명단",
+    subtitle: "등록 후 첫 수업 (오리엔테이션)",
+  },
+  trial: {
+    title: "체험 명단",
+    subtitle: "등록 전 체험 수업 (전환 대상)",
+  },
+};
+
+export default async function TrialsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ kind?: string }>;
+}) {
+  const sp = await searchParams;
+  const kind: "ot" | "trial" = sp.kind === "ot" ? "ot" : "trial";
+  const meta = KIND_META[kind];
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -20,7 +39,10 @@ export default async function TrialsPage() {
 
   const { data: trials, error } = await supabase
     .from("ot_trials")
-    .select("id, name, gender, age, scheduled_at, attended_at, status, updated_at")
+    .select(
+      "id, name, kind, gender, age, scheduled_at, attended_at, status, updated_at",
+    )
+    .eq("kind", kind)
     .order("updated_at", { ascending: false });
 
   return (
@@ -34,14 +56,41 @@ export default async function TrialsPage() {
             >
               ← 대시보드
             </Link>
-            <h1 className="text-xl font-semibold tracking-tight">OT · 체험 명단</h1>
+            <div>
+              <h1 className="text-xl font-semibold tracking-tight">{meta.title}</h1>
+              <p className="text-xs text-slate-500">{meta.subtitle}</p>
+            </div>
           </div>
-          <Link
-            href="/trials/new"
-            className="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
-          >
-            + 체험 등록
-          </Link>
+          <div className="flex items-center gap-2">
+            <nav className="flex rounded-lg border border-slate-200 p-0.5 text-xs dark:border-slate-700">
+              <Link
+                href="/trials?kind=trial"
+                className={`rounded-md px-2 py-1 transition ${
+                  kind === "trial"
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                    : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                }`}
+              >
+                체험
+              </Link>
+              <Link
+                href="/trials?kind=ot"
+                className={`rounded-md px-2 py-1 transition ${
+                  kind === "ot"
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                    : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                }`}
+              >
+                OT
+              </Link>
+            </nav>
+            <Link
+              href={`/trials/new?kind=${kind}`}
+              className="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+            >
+              + 등록
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -52,13 +101,13 @@ export default async function TrialsPage() {
           </div>
         ) : !trials || trials.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white p-10 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900">
-            등록된 OT·체험이 없어요.
+            등록된 {kind === "ot" ? "OT" : "체험"}이 없어요.
             <br />
             <Link
-              href="/trials/new"
+              href={`/trials/new?kind=${kind}`}
               className="mt-3 inline-block text-slate-900 underline dark:text-slate-100"
             >
-              첫 체험을 등록해주세요
+              첫 {kind === "ot" ? "OT" : "체험"}을 등록해주세요
             </Link>
           </div>
         ) : (

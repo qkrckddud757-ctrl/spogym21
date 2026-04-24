@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 const VALID_STATUS = ["계획", "예상", "확정", "등록", "미등록", "보류"] as const;
+const VALID_KIND = ["ot", "trial"] as const;
 
 export type TrialUpdateState = {
   ok: boolean;
@@ -22,9 +23,11 @@ export async function createTrial(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   if (!name) throw new Error("이름은 필수입니다.");
 
+  const kind = pickKind(String(formData.get("kind") ?? ""));
   const payload = {
     trainer_id: user.id,
     name,
+    kind,
     gender: nullable(formData.get("gender")),
     age: toNumber(formData.get("age")),
     phone: nullable(formData.get("phone")),
@@ -45,7 +48,7 @@ export async function createTrial(formData: FormData) {
 
   if (error) throw new Error(error.message);
 
-  revalidatePath("/trials");
+  revalidatePath(kind === "ot" ? "/ot" : "/trials");
   redirect(`/trials/${data.id}`);
 }
 
@@ -64,8 +67,10 @@ export async function updateTrial(
     const nameRaw = String(formData.get("name") ?? "").trim();
     if (!nameRaw) return { ok: false, error: "이름은 필수입니다." };
 
+    const kind = pickKind(String(formData.get("kind") ?? ""));
     const payload = {
       name: nameRaw,
+      kind,
       gender: nullable(formData.get("gender")),
       age: toNumber(formData.get("age")),
       phone: nullable(formData.get("phone")),
@@ -88,6 +93,7 @@ export async function updateTrial(
 
     revalidatePath(`/trials/${id}`);
     revalidatePath("/trials");
+    revalidatePath("/ot");
     return { ok: true, at: Date.now() };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
@@ -119,6 +125,11 @@ function nullable(v: FormDataEntryValue | null): string | null {
 function pickStatus(s: string) {
   const v = s.trim();
   return (VALID_STATUS as readonly string[]).includes(v) ? v : "계획";
+}
+
+function pickKind(s: string) {
+  const v = s.trim();
+  return (VALID_KIND as readonly string[]).includes(v) ? v : "trial";
 }
 
 function parseDatetime(v: FormDataEntryValue | null): string | null {
